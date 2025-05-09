@@ -52,12 +52,12 @@ jobs:
     - name: 释放磁盘空间
       uses: thiagokokada/free-disk-space@main
       with:
-        tool-cache: true
-        usrmisc: true
-        userlocal: true
-        opt: true
-        varcache: true
-        debug: true
+        tool-cache: false
+        usrmisc: false
+        userlocal: false
+        opt: false
+        varcache: false
+        debug: false
 
     - name: Clone source code
       working-directory: /workdir
