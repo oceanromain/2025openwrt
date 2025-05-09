@@ -49,6 +49,15 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
+    - name: 释放磁盘空间
+      uses: thiagokokada/free-disk-space@main
+      with:
+        tool-cache: true
+        usrmisc: true
+        userlocal: true
+        opt: true
+        varcache: true
+        debug: true
 
     - name: Clone source code
       working-directory: /workdir
@@ -66,10 +75,7 @@ jobs:
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
-
-    - name: Install feeds
-      run: cd openwrt && ./scripts/feeds install -a
-
+      
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
@@ -77,6 +83,9 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
+
+    - name: Install feeds
+      run: cd openwrt && ./scripts/feeds install -a
 
     - name: Download package
       id: package
